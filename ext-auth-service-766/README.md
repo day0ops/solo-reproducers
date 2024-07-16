@@ -6,7 +6,7 @@
     colima start --runtime containerd -p eas-766 -c 4 -m 8 -d 20 --network-address --install-metallb --metallb-address-pool "192.168.106.100/32" --kubernetes --kubernetes-disable traefik,servicelb --kubernetes-version v1.29.5+k3s1
     ```
 
-2. Install Gloo Edge 1.16.
+2. Install Gloo Mesh Gateway `2.5.8`.
 
     ```
     export GLOO_MESH_HELM_VERSION=2.5.8
