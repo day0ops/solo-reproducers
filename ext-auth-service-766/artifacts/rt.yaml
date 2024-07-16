@@ -1,0 +1,22 @@
+apiVersion: networking.gloo.solo.io/v2
+kind: RouteTable
+metadata:
+  name: routing
+  namespace: apps-configuration
+spec:
+  hosts:
+    - '*'
+  virtualGateways:
+    - name: gateway
+      namespace: apps-configuration
+      cluster: $CLUSTER_NAME
+  http:
+    - name: main-route
+      labels:
+        route: main-route
+      matchers:
+        - uri:
+            prefix: /
+      directResponse:
+        status: 200
+        body: 'Im ok!'
