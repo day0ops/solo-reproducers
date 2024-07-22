@@ -1,0 +1,35 @@
+apiVersion: security.policy.gloo.solo.io/v2
+kind: ExtAuthPolicy
+metadata:
+  name: apikey-auth
+  namespace: apps-configuration
+spec:
+  applyToRoutes:
+    - route:
+        labels:
+          route: main-route
+  config:
+    glooAuth:
+      booleanExpr: apikey01 && apikey02
+      configs:
+        # - apiKeyAuth:
+        #     headerName: api-key-01
+        #     k8sSecretApikeyStorage:
+        #       apiKeySecretRefs:
+        #         - name: api-key-main
+        #           namespace: apps-configuration
+        - name: apikey01
+          apiKeyAuth:
+            headerName: api-key-01
+            k8sSecretApikeyStorage:
+              apiKeySecretRefs:
+                - name: api-key-main
+                  namespace: apps-configuration
+        - name: apikey02
+          apiKeyAuth:
+            headerName: api-key-02
+            k8sSecretApikeyStorage:
+              labelSelector:
+                api-key: main
+    server:
+      name: ext-auth-server

@@ -1,0 +1,33 @@
+apiVersion: admin.gloo.solo.io/v2
+kind: Workspace
+metadata:
+  name: $CLUSTER_NAME
+  namespace: gloo-mesh
+spec:
+  workloadClusters:
+    - name: '*'
+      namespaces:
+        - name: '*'
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: gloo-mesh-config
+---
+apiVersion: admin.gloo.solo.io/v2
+kind: WorkspaceSettings
+metadata:
+  name: $CLUSTER_NAME
+  namespace: gloo-mesh-config
+spec:
+  options:
+    serviceIsolation:
+      enabled: false
+    federation:
+      enabled: false
+      serviceSelector:
+        - {}
+    eastWestGateways:
+      - selector:
+          labels:
+            istio: eastwestgateway
