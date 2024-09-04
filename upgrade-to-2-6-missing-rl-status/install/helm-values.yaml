@@ -1,0 +1,33 @@
+glooAgent:
+  enabled: true
+  relay:
+    serverAddress: gloo-mesh-mgmt-server.gloo-mesh:9900
+  extraEnvs:
+    RELAY_TOKEN:
+      value: "My token"
+    RELAY_DISABLE_SERVER_CERTIFICATE_VALIDATION:
+      value: "true"
+glooMgmtServer:
+  enabled: true
+  registerCluster: true
+  serviceType: ClusterIP
+  extraEnvs:
+    RELAY_TOKEN:
+      value: "My token"
+    RELAY_DISABLE_CLIENT_CERTIFICATE_AUTHENTICATION:
+      value: "true"
+extAuthService:
+  enabled: true
+rateLimiter:
+  enabled: true
+glooUi:
+  enabled: true
+istioInstallations:
+  enabled: true
+prometheus:
+  enabled: true
+redis:
+  deployment:
+    enabled: true
+telemetryCollector:
+  enabled: true

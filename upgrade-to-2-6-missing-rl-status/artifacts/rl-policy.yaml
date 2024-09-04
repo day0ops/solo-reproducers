@@ -1,0 +1,20 @@
+apiVersion: trafficcontrol.policy.gloo.solo.io/v2
+kind: RateLimitPolicy
+metadata:
+  name: rl-policy
+  namespace: apps-configuration
+spec:
+  applyToRoutes:
+    - route:
+        labels:
+          rt: http-httpbin-child-rt
+  config:
+    phase:
+      postAuthz: {}
+    ratelimitClientConfig:
+      name: rl-client-config
+    ratelimitServerConfig:
+      name: rl-server-config
+      namespace: gloo-mesh
+    serverSettings:
+      name: rl-server

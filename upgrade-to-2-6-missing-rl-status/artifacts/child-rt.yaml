@@ -1,0 +1,26 @@
+apiVersion: networking.gloo.solo.io/v2
+kind: RouteTable
+metadata:
+  name: child-rt-v1
+  namespace: apps-configuration
+  labels:
+    rt: child
+    level: "1"
+spec:
+  http:
+    - name: http-httpbin-child-rt
+      labels:
+        rt: http-httpbin-child-rt
+      matchers:
+        - uri:
+            prefix: /
+      forwardTo:
+        destinations:
+          - ref:
+              name: httpbin
+              namespace: apps
+            port:
+              number: 8000
+      # directResponse:
+      #   status: 200
+      #   body: 'Hi, from child-rt-v1'

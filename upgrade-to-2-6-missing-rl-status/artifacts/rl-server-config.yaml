@@ -1,0 +1,20 @@
+apiVersion: admin.gloo.solo.io/v2
+kind: RateLimitServerConfig
+metadata:
+  name: rl-server-config
+  namespace: gloo-mesh
+spec:
+  destinationServers:
+    - port:
+        number: 8083
+      ref:
+        cluster: $CLUSTER_NAME
+        name: rate-limiter
+        namespace: gloo-mesh
+  raw:
+    descriptors:
+      - key: generic_key
+        rateLimit:
+          requestsPerUnit: 2
+          unit: MINUTE
+        value: counter
