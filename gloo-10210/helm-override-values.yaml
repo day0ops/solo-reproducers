@@ -1,0 +1,80 @@
+# Disable Gloo Federation (Gloo Admin UI will be installed regardless)
+gloo-fed:
+  enabled: false
+
+# Global values
+global:
+  ## Extensions
+  extensions:
+    ## Disable Rate limit
+    rateLimit:
+      enabled: false
+
+    ## Disable Ext-auth
+    extAuth:
+      enabled: false
+
+# Control Plane values
+gloo:
+  ## Global bootstrap settings
+  settings:
+    ## Only watch for services and CRDS in following namespaces
+    watchNamespaces:
+      - apps
+      - apps-configuration
+      - gloo-system
+
+    ## Namespace for Gloo resources
+    writeNamespace: gloo-system
+  
+    ## Disabled as we do not want to map K8 Services -> Upstreams in memory
+    ## Causes performance issues
+    disableKubernetesDestinations: true
+
+    ## Vault configuration
+    # kubeResourceOverride:
+    #   spec:
+    #     secretOptions:
+    #       sources:
+    #         ## Multiple sources
+    #         - vault:
+    #             address: ${VAULT_REMOTE_ADDR}
+    #             tlsConfig:
+    #               caCert: /vault/tls/server_ca.crt
+    #               clientCert: /vault/tls/client.crt
+    #               clientKey: /vault/tls/client.key
+    #               tlsServerName: ${VAULT_TLS_SERVER_NAME}
+    #             aws:
+    #               iamServerIdHeader: ${VAULT_SERVER_ID_HEADER}
+    #               mountPath: aws
+    #               region: ${CLUSTER_REGION}
+    #             pathPrefix: "secrets/kv-v2/secret-storage" 
+    #             rootKey: "gloo"
+    #         - kubernetes: {}
+
+  gloo:
+    ## IAM role
+    serviceAccount:
+      extraAnnotations:
+        eks.amazonaws.com/role-arn: ${GLOO_AWS_IAM_ROLE}
+
+  ## Kube Gateway API (Disabled)
+  kubeGateway:
+    enabled: false
+
+  ## Disable Discovery
+  discovery:
+    enabled: false
+
+  ## Disable default Gateway Proxies
+  gatewayProxies:
+    gatewayProxy:
+      disabled: false
+
+## Disable observability
+grafana:
+  defaultInstallationEnabled: false
+observability:
+  enabled: false
+prometheus:
+  enabled: false

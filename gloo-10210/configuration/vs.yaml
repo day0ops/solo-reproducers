@@ -1,0 +1,23 @@
+apiVersion: gateway.solo.io/v1
+kind: VirtualService
+metadata:
+  name: main-vs
+  namespace: apps-configuration
+spec:
+  virtualHost:
+    domains:
+      - '*'
+    routes:
+      - matchers:
+          - prefix: /
+        routeAction:
+          single:
+            upstream:
+              name: httpbin-upstream
+              namespace: apps
+        options:
+          headerManipulation:
+            requestHeadersToAdd:
+              - headerSecretRef:
+                  name: test-header
+                  namespace: apps-configuration
