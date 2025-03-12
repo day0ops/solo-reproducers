@@ -1,0 +1,10 @@
+apiVersion: gloo.solo.io/v1
+kind: Upstream
+metadata:
+  name: jwks-upstream
+  namespace: apps
+spec:
+  static:
+    hosts:
+      - addr: mock-jwt-service.jwt-server.svc
+        port: 8008

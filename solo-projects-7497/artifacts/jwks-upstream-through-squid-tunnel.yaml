@@ -1,0 +1,12 @@
+apiVersion: gloo.solo.io/v1
+kind: Upstream
+metadata:
+  name: jwks-upstream
+  namespace: apps
+spec:
+  ## use a forward proxy
+  kube:
+    serviceName: squid-service
+    serviceNamespace: squid
+    servicePort: 3128
+  httpProxyHostname: mock-jwt-service.jwt-server.svc:8008

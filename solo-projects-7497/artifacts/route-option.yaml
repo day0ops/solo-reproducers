@@ -1,0 +1,23 @@
+apiVersion: gateway.solo.io/v1
+kind: RouteOption
+metadata:
+  name: adv-route-options
+  namespace: apps
+spec:
+  options:
+    jwtProvidersStaged:
+      beforeExtAuth:
+        providers:
+          mock:
+            issuer: jwt-mock-server
+            audiences:
+              - gloo
+            tokenSource:
+              headers:
+                - header: access-token
+            jwks:
+              remote:
+                url: http://mock-jwt-service.jwt-server.svc:8008/jwks
+                upstreamRef:
+                  name: jwks-upstream
+                  namespace: apps

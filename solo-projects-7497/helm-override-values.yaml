@@ -1,0 +1,41 @@
+# Disable Gloo Federation (Gloo Admin UI will be installed regardless)
+gloo-fed:
+  enabled: false
+
+# Global values
+global:
+  ## Extensions
+  extensions:
+    ## Disable Rate limit
+    rateLimit:
+      enabled: false
+
+    ## Disable Ext-auth
+    extAuth:
+      enabled: false
+
+# Control Plane values
+gloo:
+  ## Enable Kube Gateway API
+  kubeGateway:
+    enabled: true
+
+  ## Disable Discovery
+  discovery:
+    enabled: false
+
+  ## Disable default Gateway Proxies
+  gatewayProxies:
+    gatewayProxy:
+      disabled: true
+    
+      gatewaySettings:
+        disabled: true
+
+## Disable observability
+grafana:
+  defaultInstallationEnabled: false
+observability:
+  enabled: false
+prometheus:
+  enabled: false

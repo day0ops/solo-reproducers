@@ -1,0 +1,25 @@
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: HTTPRoute
+metadata:
+  name: httpbin
+  namespace: apps
+  labels:
+    route: httpbin
+spec:
+  parentRefs:
+    - name: main-gw
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      filters:
+        - type: ExtensionRef
+          extensionRef:
+            name: adv-route-options
+            kind: RouteOption
+            group: gateway.solo.io
+      backendRefs:
+        - name: httpbin-upstream
+          kind: Upstream
+          group: gloo.solo.io
