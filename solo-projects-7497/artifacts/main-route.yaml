@@ -9,6 +9,21 @@ spec:
   parentRefs:
     - name: main-gw
   rules:
+    ## we are creating a dummy route here to ensure that the Squid tunnel is created to 
+    # - matches:
+    #     - path:
+    #         type: Exact
+    #         value: /dummy-placeholder-path-for-jwks-upstream-tunnel
+    #   filters:
+    #     - type: ExtensionRef
+    #       extensionRef:
+    #         name: adv-route-options
+    #         kind: RouteOption
+    #         group: gateway.solo.io
+    #   backendRefs:
+    #     - name: jwks-upstream
+    #       kind: Upstream
+    #       group: gloo.solo.io
     - matches:
         - path:
             type: PathPrefix

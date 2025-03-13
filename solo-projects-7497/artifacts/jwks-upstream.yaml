@@ -4,6 +4,7 @@ metadata:
   name: jwks-upstream
   namespace: apps
 spec:
+  ## no tunnel created here
   static:
     hosts:
       - addr: mock-jwt-service.jwt-server.svc

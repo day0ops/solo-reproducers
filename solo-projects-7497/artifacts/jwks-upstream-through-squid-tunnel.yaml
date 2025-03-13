@@ -4,7 +4,7 @@ metadata:
   name: jwks-upstream
   namespace: apps
 spec:
-  ## use a forward proxy
+  ## use the Squid proxy tunnel to reach the JWKS endpoint
   kube:
     serviceName: squid-service
     serviceNamespace: squid
