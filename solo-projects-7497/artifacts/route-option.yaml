@@ -21,3 +21,6 @@ spec:
                 upstreamRef:
                   name: jwks-upstream
                   namespace: apps
+                asyncFetch:
+                  fastListener: false
+                cacheDuration: 5m

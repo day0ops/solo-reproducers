@@ -49,7 +49,7 @@ An example of this missing cluster is,
 2. Setting up Gloo Gateway.
 
     ```bash
-    export GLOO_GW_HELM_VERSION="1.18.7"
+    export GLOO_GW_HELM_VERSION="1.18.8"
     export GLOO_GW_LICENSE_KEY="Gloo Gateway Enterprise license>"
 
     helm repo add gloo-ee https://storage.googleapis.com/gloo-ee-helm
@@ -63,6 +63,20 @@ An example of this missing cluster is,
       --version=${GLOO_GW_HELM_VERSION} \
       --set-string license_key=${GLOO_GW_LICENSE_KEY} \
       -f -
+
+    ## below instructions are for the dev builds with the fixes
+    # export GLOO_GW_HELM_VERSION="1.19.0-beta5-bmain-5ed95a7"
+
+    # helm repo add gloo-ee-test https://storage.googleapis.com/gloo-ee-test-helm
+    # helm repo update gloo-ee-test --fail-on-repo-update-fail
+
+    # kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.2.0/standard-install.yaml
+    # envsubst < <(cat ./helm-override-values.yaml) | helm upgrade -i gloo-ee gloo-ee-test/gloo-ee \
+    #  --namespace gloo-system \
+    #  --create-namespace \
+    #  --version=${GLOO_GW_HELM_VERSION} \
+    #  --set-string license_key=${GLOO_GW_LICENSE_KEY} \
+    #  -f -
     ```
 
 3. Install Squid.

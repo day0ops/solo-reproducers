@@ -9,4 +9,4 @@ spec:
     serviceName: squid-service
     serviceNamespace: squid
     servicePort: 3128
-  httpProxyHostname: mock-jwt-service.jwt-server.svc:8008
+  httpProxyHostname: mock-jwt-service.jwt-server.svc.cluster.local:8008

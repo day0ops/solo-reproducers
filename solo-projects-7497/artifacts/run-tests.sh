@@ -15,7 +15,7 @@ sleep 3
 access_token=$(curl -s \
     -XPOST localhost:8008/token | jq -r .access_token)
 
-gwaddr=$(kubectl get -n apps svc/gloo-proxy-main-gw -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+gwaddr=$(minikube service -p testing gloo-proxy-main-gw -n apps --url=true)
 
 # ---------------------------------------------------------------------------------------------------------------------
 
