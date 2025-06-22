@@ -1,0 +1,9 @@
+apiVersion: gloo.solo.io/v1
+kind: Upstream
+metadata:
+  name: httpbin-upstream
+spec:
+  kube:
+    serviceName: httpbin
+    serviceNamespace: httpbin
+    servicePort: 8000

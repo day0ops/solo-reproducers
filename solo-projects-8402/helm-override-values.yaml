@@ -1,0 +1,53 @@
+# Global values
+global:
+  ## Extensions
+  extensions:
+    ## Rate limit
+    rateLimit:
+      enabled: false
+
+    ## Ext-auth
+    extAuth:
+      enabled: false
+
+gloo:
+  ## Global bootstrap settings
+  settings:
+    ## Disabled as we do not want to map K8 Services -> Upstreams in memory
+    ## Causes performance issues
+    disableKubernetesDestinations: true
+
+  ## Discovery
+  discovery:
+    enabled: false
+
+  ## Gateway Proxies
+  ## Disabled Edge proxies
+  gatewayProxies:
+    gatewayProxy:
+      disabled: true
+
+  ## Enable Kube Gateway API
+  kubeGateway:
+    enabled: true
+
+# Disable observability components
+grafana:
+  defaultInstallationEnabled: false
+  persistence:
+    storageClassName: "gp2"
+
+prometheus:
+  enabled: false
+  server:
+    persistentVolume:
+      storageClass: "gp2"
+
+observability:
+  enabled: false
+
+# Disable Gloo Federation server and UI
+gloo-fed:
+  enabled: false
+  glooFedApiserver:
+    enable: false

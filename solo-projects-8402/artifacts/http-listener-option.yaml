@@ -1,0 +1,13 @@
+apiVersion: gateway.solo.io/v1
+kind: HttpListenerOption
+metadata:
+  name: gw-health-checks
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: common-gw
+      sectionName: healthcheck
+  options:
+    healthCheck:
+      path: /healthz/ready

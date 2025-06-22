@@ -1,0 +1,49 @@
+apiVersion: gateway.gloo.solo.io/v1alpha1
+kind: GatewayParameters
+metadata:
+  name: common-gw-params
+spec:
+  kube:
+    deployment:
+      replicas: 1
+
+    podTemplate:
+      ## Enable readiness probe
+      readinessProbe:
+        httpGet:
+          path: /healthz/ready
+          port: "healthcheck"
+        initialDelaySeconds: 10
+        periodSeconds: 1
+      ## This is useful for draining any connections prior to terminating
+      ## Grace period before terminating the pod (This should be > `sleepTimeSeconds`)
+      terminationGracePeriodSeconds: 30
+      gracefulShutdown: 
+        enabled: true
+        ## Time for preStop hook to wait before allowing Envoy to terminate
+        sleepTimeSeconds: 25
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: common-gw
+  annotations:
+    gateway.gloo.solo.io/gateway-parameters-name: "common-gw-params"
+spec:
+  gatewayClassName: gloo-gateway
+  listeners:
+    - name: http
+      port: 80
+      protocol: HTTP
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              shared-gateway: "true"
+    - name: healthcheck
+      port: 9080
+      protocol: HTTP
+      allowedRoutes:
+        namespaces:
+          from: Same

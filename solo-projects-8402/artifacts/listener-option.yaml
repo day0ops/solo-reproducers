@@ -1,0 +1,43 @@
+apiVersion: gateway.solo.io/v1
+kind: ListenerOption
+metadata:
+  name: enable-access-logs
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: common-gw
+      sectionName: http
+  options:
+    accessLoggingService:
+      accessLog:
+        - fileSink:
+            path: /dev/stdout
+            jsonFormat:
+              start_time: "%START_TIME%"
+              method: "%REQ(X-ENVOY-ORIGINAL-METHOD?:METHOD)%"
+              path: "%REQ(X-ENVOY-ORIGINAL-PATH?:PATH)%"
+              protocol: "%PROTOCOL%"
+              response_code: "%RESPONSE_CODE%"
+              response_code_details: "%RESPONSE_CODE_DETAILS%"
+              response_flags: "%RESPONSE_FLAGS%"
+              bytes_received: "%BYTES_RECEIVED%"
+              bytes_sent: "%BYTES_SENT%"
+              total_duration: "%DURATION%"
+              resp_upstream_service_time: "%RESP(X-ENVOY-UPSTREAM-SERVICE-TIME)%"
+              x_forwarded_for: "%REQ(X-FORWARDED-FOR)%"
+              x_forwarded_proto: "%REQ(X-FORWARDED-PROTO)%"
+              x_envoy_external_address: "%REQ(X-ENVOY-EXTERNAL-ADDRESS)%"
+              user_agent: "%REQ(USER-AGENT)%"
+              request_id: "%REQ(X-REQUEST-ID)%"
+              authority: "%REQ(:AUTHORITY)%"
+              upstream_host: "%UPSTREAM_HOST%"
+              upstream_cluster: "%UPSTREAM_CLUSTER%"
+              downstream_local_address: "%DOWNSTREAM_LOCAL_ADDRESS%"
+              downstream_remote_address: "%DOWNSTREAM_REMOTE_ADDRESS%"
+              downstream_direct_remote_address: "%DOWNSTREAM_DIRECT_REMOTE_ADDRESS%"
+              upstream_local_address: "%UPSTREAM_LOCAL_ADDRESS%"
+              route_name: "%ROUTE_NAME%"
+          filter:
+            # Dont log health check requests
+            notHealthCheckFilter: {}
